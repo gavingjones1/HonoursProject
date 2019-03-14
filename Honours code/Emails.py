@@ -9,7 +9,7 @@ imap_url = 'imap.gmail.com'
 smtp_url = 'smtp.gmail.com'
 ###### sending email
 
-def sendEmail1():
+def sendEmailKey():
     
     content = 'Subject: Subject 1 \n\n This is the first email'
 
@@ -23,7 +23,7 @@ def sendEmail1():
 
     mail.sendmail(user, user, content)
 
-def sendEmail2():
+def sendEmailPhish():
 
     content = 'Subject: Subject 2 \n\n This is the second email'
 
@@ -37,7 +37,7 @@ def sendEmail2():
 
     mail.sendmail(user, user, content)
 
-def sendEmail3():
+def sendEmailRans():
 
     content = 'Subject: Subject 3 \n\n This is the third email'
 
@@ -102,7 +102,7 @@ def recieveEmail3():
         print('Third email has been recieved')
 
 ###### delete files
-def deleteEmail():
+def deleteEmailInbox():
     con = imaplib.IMAP4_SSL(imap_url)
     con.login(user,password)
     con.select('INBOX')
@@ -111,7 +111,7 @@ def deleteEmail():
         con.store(num, '+FLAGS', '\\Deleted')
     con.expunge()
     con.close()
-def deleteEmail2():
+def deleteEmailSent():
     con = imaplib.IMAP4_SSL(imap_url)
     con.login(user,password)
     con.select('SENT')
@@ -120,12 +120,5 @@ def deleteEmail2():
         con.store(num, '+FLAGS', '\\Deleted')
     con.expunge()
     con.close()
-
-##sendEmail1()
-##sendEmail2()
-##sendEmail3()
-##recieveEmail1()
-##recieveEmail2()
-##recieveEmail3()
 
 
