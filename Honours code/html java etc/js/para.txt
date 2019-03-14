@@ -1,0 +1,3 @@
+At first glance, this webpage looks a lot like facebook.
+It is extremely easy for hackers to recreate the facebook web page and you would not know the difference.
+Try typing in any email and password (not your own! Does not have to be real) into the sign in boxes on the top right of the web page. Once done, close the browser window.
