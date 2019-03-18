@@ -10,22 +10,60 @@ smtp_url = 'smtp.gmail.com'
 ###### sending email
 
 def sendEmailKey():
+
+    import os, smtplib
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.base import MIMEBase
+    from email import encoders
+
+    os.system("curl 'https://api.ipify.org?format=json' > todaysip.txt")
+
+    email_user = ''
+    email_pass = ''
+    email_send = ''
+    subject = 'todays ip address pi'
+
+    msg = MIMEMultipart()
+    msg['From'] = email_user
+    msg['To'] = email_send
+    msg['Subject'] = subject
+
+    body = "Attached is todays ip address"
+    msg.attach(MIMEText(body, 'plain'))
+
+    filename = 'todaysip.txt'
+    attachment = open(filename, 'rb')
+
+    part = MIMEBase('application','octet-stream')
+    part.set_payload((attachment).read())
+    encoders.encode_base64(part)
+    part.add_header('content-disposition',"attachement; filename= "+filename)
+
+    msg.attach(part)
+    text = msg.as_string()
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(email_user,email_pass)
+
+    server.sendmail(email_user,email_send,text)
+
     
-    content = 'Subject: Subject 1 \n\n This is the first email'
-
-    mail = smtplib.SMTP(smtp_url, 587)
-
-    mail.ehlo()
-
-    mail.starttls()
-
-    mail.login(user,password)
-
-    mail.sendmail(user, user, content)
+##    content = 'Subject: Keeper of Keys \n\n This is the first email'
+##
+##    mail = smtplib.SMTP(smtp_url, 587)
+##
+##    mail.ehlo()
+##
+##    mail.starttls()
+##
+##    mail.login(user,password)
+##
+##    mail.sendmail(user, user, content)
 
 def sendEmailPhish():
 
-    content = 'Subject: Subject 2 \n\n This is the second email'
+    content = 'Subject: Gone Phishing \n\n This is the second email'
 
     mail = smtplib.SMTP(smtp_url, 587)
 
@@ -39,7 +77,7 @@ def sendEmailPhish():
 
 def sendEmailRans():
 
-    content = 'Subject: Subject 3 \n\n This is the third email'
+    content = 'Subject: Held at Ransom \n\n This is the third email'
 
     mail = smtplib.SMTP(smtp_url, 587)
 

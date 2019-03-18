@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #Gavin Jones Honours project control app
 #Created by Gavin Jones
 #Controlling the incident scenario
