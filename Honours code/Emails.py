@@ -1,12 +1,22 @@
 #Email script, reads in given email addr, password and imap/smap url.
 #Sends email, waits, recieves email then deletes contents of inbox.
 
-import imaplib, smtplib, email, time
+import imaplib, smtplib, email, time, json
 
-user = 'userinthecrypt@gmail.com'
+user = ''
 password = ''
 imap_url = 'imap.gmail.com'
 smtp_url = 'smtp.gmail.com'
+part1a = ''
+
+with open('part1.txt', 'r') as part1c:
+    part1b=part1c.read().replace('\n','')
+    part1a=part1b
+
+with open('Auth.json') as json_file:
+    data = json.load(json_file)
+    user = (data['Crypt'][0]['username'])
+    password = (data['Crypt'][0]['password'])
 ###### sending email
 
 def sendEmailKey():
@@ -17,22 +27,22 @@ def sendEmailKey():
     from email.mime.base import MIMEBase
     from email import encoders
 
-    os.system("curl 'https://api.ipify.org?format=json' > todaysip.txt")
+    os.system("")
 
     email_user = ''
     email_pass = ''
-    email_send = ''
-    subject = 'todays ip address pi'
+    email_send = user
+    subject = 'First Email'
 
     msg = MIMEMultipart()
-    msg['From'] = email_user
+    msg['From'] = user
     msg['To'] = email_send
     msg['Subject'] = subject
 
-    body = "Attached is todays ip address"
+    body = part1a
     msg.attach(MIMEText(body, 'plain'))
 
-    filename = 'todaysip.txt'
+    filename = 'innocent_file.txt'
     attachment = open(filename, 'rb')
 
     part = MIMEBase('application','octet-stream')
@@ -44,9 +54,9 @@ def sendEmailKey():
     text = msg.as_string()
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login(email_user,email_pass)
-
-    server.sendmail(email_user,email_send,text)
+    server.login(user,password)
+    
+    server.sendmail(user,email_send,text)
 
     
 ##    content = 'Subject: Keeper of Keys \n\n This is the first email'
@@ -89,56 +99,30 @@ def sendEmailRans():
 
     mail.sendmail(user, user, content)
 
-###### recieving email
+def EmailTry():
+    from email.message import EmailMessage
 
-def get_body(msg):
+    email_user = ''
+    email_pass = ''
+    email_send = user
+    subject = 'First Email'
 
-    #detects if multiple parts to email
-    if msg.is_multipart():
-        #if theres multiple payloads, get the first one
-        return get_body(msg.get_payload(0))
-        print('Multiple parts')
-    else:
-        return msg.get_payload(None,True)
-        return True
+    msg = EmailMessage()
+    msg['From'] = user
+    msg['To'] = email_send
+    msg['Subject'] = subject
+    msg.set_content('see attach')
 
+    with open('innocent_file.txt', 'rb') as f:
+        file_data = f.read()
+        file_name = f.name
 
-def recieveEmail1():
-    con = imaplib.IMAP4_SSL(imap_url)
-    con.login(user,password)
-    con.select('INBOX')
+    msg.add_attachment(file_data, maintype='text', subtype='octet-stream', filename=file_name)
 
-    result, data  = con.fetch(b'1','(RFC822)')
-    time.sleep(10)
-    raw = email.message_from_bytes(data[0][1])
-    print(get_body(raw))
-    if True:
-        print('First email has been recieved')
-
-def recieveEmail2():
-    con = imaplib.IMAP4_SSL(imap_url)
-    con.login(user,password)
-    con.select('INBOX')
-
-    result, data  = con.fetch(b'2','(RFC822)')
-    time.sleep(10)
-    raw = email.message_from_bytes(data[0][1])
-    print(get_body(raw))
-    if True:
-        print('Second email has been recieved')
-
-def recieveEmail3():
-    con = imaplib.IMAP4_SSL(imap_url)
-    con.login(user,password)
-    con.select('INBOX')
-
-    result, data  = con.fetch(b'3','(RFC822)')
-    time.sleep(10)
-    raw = email.message_from_bytes(data[0][1])
-    print(get_body(raw))
-    if True:
-        print('Third email has been recieved')
-
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(user, password)
+        smtp.send_message(msg)
+    
 ###### delete files
 def deleteEmailInbox():
     con = imaplib.IMAP4_SSL(imap_url)
