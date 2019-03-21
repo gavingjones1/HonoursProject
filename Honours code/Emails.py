@@ -8,6 +8,7 @@ password = ''
 imap_url = 'imap.gmail.com'
 smtp_url = 'smtp.gmail.com'
 part1a = ''
+html1 = ''
 
 with open('part1.txt', 'r') as part1c:
     part1b=part1c.read().replace('\n','')
@@ -17,6 +18,11 @@ with open('Auth.json') as json_file:
     data = json.load(json_file)
     user = (data['Crypt'][0]['username'])
     password = (data['Crypt'][0]['password'])
+
+with open('html1.txt') as string:
+    sData = string.read().replace('\n','')
+    html1=sData
+    
 ###### sending email
 
 def sendEmailKey():
@@ -71,20 +77,6 @@ def sendEmailKey():
 ##
 ##    mail.sendmail(user, user, content)
 
-def sendEmailPhish():
-
-    content = 'Subject: Gone Phishing \n\n This is the second email'
-
-    mail = smtplib.SMTP(smtp_url, 587)
-
-    mail.ehlo()
-
-    mail.starttls()
-
-    mail.login(user,password)
-
-    mail.sendmail(user, user, content)
-
 def sendEmailRans():
 
     content = 'Subject: Held at Ransom \n\n This is the third email'
@@ -99,7 +91,7 @@ def sendEmailRans():
 
     mail.sendmail(user, user, content)
 
-def EmailTry():
+def SendEmailPhish():
     from email.message import EmailMessage
 
     email_user = ''
@@ -112,6 +104,27 @@ def EmailTry():
     msg['To'] = email_send
     msg['Subject'] = subject
     msg.set_content('see attach')
+
+    msg.add_alternative(html1, subtype='html')
+
+    
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(user, password)
+        smtp.send_message(msg)
+
+def SendEmailKeys:
+    from email.message import EmailMessage
+
+    email_user = ''
+    email_pass = ''
+    email_send = user
+    subject = 'First Email'
+
+    msg = EmailMessage()
+    msg['From'] = user
+    msg['To'] = email_send
+    msg['Subject'] = subject
 
     with open('innocent_file.txt', 'rb') as f:
         file_data = f.read()
