@@ -16,12 +16,12 @@ import time
 def Email1():
     output.delete(0.0, END)
     output.insert(END, 'Please check your email. You will find an email there labelled ** and instructions going forward.')
-    sendEmailKey()
+    sendEmailPhish()
 
 def Email2():
     output.delete(0.0, END)
     output.insert(END, 'Well done for completing part one. Now again, please check your email. You will find an email there labelled ** and instructions going forward.')
-    sendEmailPhish()
+    sendEmailKeys()
 
 def Email3():
     output.delete(0.0,END)

